@@ -47,8 +47,8 @@ const Tours = () => {
                 <p className="text-sm text-black"><span className="font-medium text-black/70">Date:</span> {tour?.date}</p>
                 <p className="text-sm text-black"><span className="font-medium text-black/70">Price:</span> ${tour?.price}</p>
                 <p className="text-sm text-yellow-600"><span className="font-medium">Reviews:</span> ⭐ {tour?.review}</p>
-                <div className='flex text-black justify-between items-center my-4'>
-                    <button onClick={()=>handleTourId(tour?.id)} className='btn p-2 border-2 rounded-md'>View Details</button>
+                <div className='flex text-white font-semibold justify-between items-center my-4'>
+                    <button onClick={()=>handleTourId(tour?.id)} className='btn p-2 hover:bg-green-700 bg-green-600  rounded-md'>View Details</button>
                     <span className='text-2xl hover:text-yellow-400'><FiHeart /></span>
                 </div>
               </div>
