@@ -1,7 +1,10 @@
-import Image from "next/image";
+
+import HomePage from "./Home/page";
 
 export default function Home() {
   return (
-    <div>Hello world</div>
+    <div className="w-[100%] mx-auto">
+      <HomePage></HomePage>
+    </div>
   );
 }
