@@ -1,17 +1,56 @@
+'use client'
 import React from 'react';
+import { useState } from "react";
+import Link from "next/link";
+import { CiMenuFries } from "react-icons/ci";
 
 const Navbar = () => {
+    const [isOpen, setIsOpen] = useState(false);
     return (
-        <div>
-         <ul>
-            <li>home</li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-         </ul>
-        </div>
+        <nav className="bg-green-900 text-white shadow-lg w-[100%] sticky top-0">
+            <div className="w-[90%] mx-auto ">
+                <div className="flex justify-between items-center h-[64px]">
+                    {/* Agency Name */}
+                    <div className="flex-shrink-0">
+                        <Link href="/">
+                            <span className="text-2xl font-bold bg-clip-text text-transparent 
+  bg-gradient-to-r from-green-300 via-green-400 to-green-500">
+                                GlobeVista Agency
+                            </span>
+
+                        </Link>
+                    </div>
+
+                    {/* Menu */}
+                    <div className="hidden md:flex space-x-6">
+                        <Link href="/" className="hover:text-green-300">Home</Link>
+                        <Link href="/tours" className="hover:text-green-300">Tours</Link>
+                        <Link href="/about" className="hover:text-green-300">About</Link>
+                        <Link href="/contact" className="hover:text-green-300">Contact</Link>
+                    </div>
+
+                    <div className="md:hidden flex items-center">
+                        <button
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="focus:outline-none"
+                        >
+                        {/* menu Icon is here */}
+                        <CiMenuFries className='text-3xl font-bold'/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Menu for mobile */}
+            {isOpen && (
+                <div className="md:hidden bg-green-800 px-4 pb-4 space-y-2">
+                    <Link href="/" className="block hover:text-green-300">Home</Link>
+                    <Link href="/tours" className="block hover:text-green-300">Tours</Link>
+                    <Link href="/about" className="block hover:text-green-300">About</Link>
+                    <Link href="/contact" className="block hover:text-green-300">Contact</Link>
+                </div>
+            )}
+        </nav>
     );
 };
 
