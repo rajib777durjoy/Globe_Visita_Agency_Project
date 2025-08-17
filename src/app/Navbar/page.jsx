@@ -7,7 +7,7 @@ import { CiMenuFries } from "react-icons/ci";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <nav className="bg-green-900 text-white shadow-lg w-[100%] sticky top-0">
+        <nav className="bg-green-900 text-white shadow-lg w-[100%] sticky top-0 z-50">
             <div className="w-[90%] mx-auto ">
                 <div className="flex justify-between items-center h-[64px]">
                     {/* Agency Name */}
@@ -24,7 +24,7 @@ const Navbar = () => {
                     {/* Menu */}
                     <div className="hidden md:flex space-x-6">
                         <Link href="/" className="hover:text-green-300">Home</Link>
-                        <Link href="/tours" className="hover:text-green-300">Tours</Link>
+                        <Link href="/Tours" className="hover:text-green-300">Tours</Link>
                         <Link href="/about" className="hover:text-green-300">About</Link>
                         <Link href="/contact" className="hover:text-green-300">Contact</Link>
                     </div>

@@ -35,7 +35,7 @@ const Banner = () => {
                 }
 
             </Swiper>
-            <form className='w-[80%] h-[50px] mx-auto grid grid-cols-5 text-black gap-4 translate-y-40 translate-x-32 z-50 absolute top-100 '>
+            <form className='w-[80%] h-[50px] mx-auto grid grid-cols-5 text-black gap-4 translate-y-40 translate-x-32 z-20 absolute top-100 '>
                 <div className=' flex items-center bg-white/60 rounded-sm py-2 col-span-3'>
                     <h2 className='py-4 mx-2 px-4'><FaMapMarkerAlt className='text-2xl' /></h2>
                     <div>
