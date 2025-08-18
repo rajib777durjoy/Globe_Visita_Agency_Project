@@ -27,7 +27,7 @@ const Navbar = () => {
                         <Link href="/Tours" className="hover:text-green-300">Tours</Link>
                         <Link href="/Booking_list" className="hover:text-green-300">Booking_List</Link>
                         <Link href="/About" className="hover:text-green-300">About</Link>
-                        <Link href="/contact" className="hover:text-green-300">Contact</Link>
+                        <Link href="/Contact" className="hover:text-green-300">Contact</Link>
                     </div>
 
                     <div className="md:hidden flex items-center">
@@ -46,9 +46,10 @@ const Navbar = () => {
             {isOpen && (
                 <div className="md:hidden bg-green-800 px-4 pb-4 space-y-2">
                     <Link href="/" className="block hover:text-green-300">Home</Link>
-                    <Link href="/tours" className="block hover:text-green-300">Tours</Link>
-                    <Link href="/about" className="block hover:text-green-300">About</Link>
-                    <Link href="/contact" className="block hover:text-green-300">Contact</Link>
+                    <Link href="/Tours" className="block hover:text-green-300">Tours</Link>
+                    <Link href="/Booking_list" className="block hover:text-green-300">Booking_List</Link>
+                    <Link href="/About" className="block hover:text-green-300">About</Link>
+                    <Link href="/Contact" className="block hover:text-green-300">Contact</Link>
                 </div>
             )}
         </nav>
