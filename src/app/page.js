@@ -1,5 +1,6 @@
 
 import AboutPage from "./About/page";
+import Contact from "./Contact/page";
 import HomePage from "./Home/page";
 import ToursOverview from "./Home/ToursOverview/page";
 
@@ -9,6 +10,7 @@ export default function Home() {
       <HomePage></HomePage>
       <ToursOverview></ToursOverview>
       <AboutPage></AboutPage>
+      <Contact></Contact>
     </div>
   );
 }
