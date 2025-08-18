@@ -10,12 +10,10 @@ import 'swiper/css/navigation';
 import 'swiper/css';
 import './Banner.css'
 import { sliderData } from './DummySilderData/page';
-import Image from 'next/image';
 
 
 const Banner = () => {
  
-
     return (
         <div className='w-[100%]  h-screen'>
             <Swiper navigation={true} modules={[Navigation]} className="w-[100%] h-[500px] relative">
