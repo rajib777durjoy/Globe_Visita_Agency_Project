@@ -32,5 +32,5 @@ npm run dev
  Github link: https://github.com/rajib777durjoy/Globe_Visita_Agency_Project
 
 ## Deploy on Vercel:
-Live link:
+Live link:https://globe-vista-agency.vercel.app
 
