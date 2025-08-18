@@ -23,13 +23,16 @@ const Footer = () => {
                             <Link href="/">Home</Link>
                         </li>
                         <li className="py-1 hover:text-green-300">
-                            <Link href="/tours">Tours</Link>
+                            <Link href="/Tours">Tours</Link>
                         </li>
                         <li className="py-1 hover:text-green-300">
-                            <Link href="/about">About</Link>
+                            <Link href="/Booking_list">Booking_list</Link>
                         </li>
                         <li className="py-1 hover:text-green-300">
-                            <Link href="/contact">Contact</Link>
+                            <Link href="/About" >About</Link>
+                        </li>
+                        <li className="py-1 hover:text-green-300">
+                            <Link href="/Contact" >Contact</Link>
                         </li>
                     </ul>
                 </div>

@@ -31,11 +31,11 @@ const Contact = () => {
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
         templateParams
       );
-      console.log("Email sent successfully:", response);
+      // console.log("Email sent successfully:", response);
       reset();
-      alert("Message sent successfully!");
+      // alert("Message sent successfully!");
     } catch (error) {
-      console.error("Failed to send email:", error);
+      // console.error("Failed to send email:", error);
       alert("Failed to send message. Please try again later.");
     }
   };
