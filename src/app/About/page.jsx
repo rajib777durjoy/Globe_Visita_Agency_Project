@@ -5,63 +5,85 @@ import { motion } from "framer-motion";
 const AboutPage = () => {
   return (
     <motion.div
-      className="min-h-screen bg-gray-50 p-6 md:p-12"
+      className="min-h-screen py-10 md:py-16 bg-white dark:bg-gray-900"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       {/* Header */}
-      <div className="max-w-5xl mx-auto text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-          About Raktch Technology & Software
+      <div className="w-full mx-auto text-center mb-14 px-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          About Voyzen Travel
         </h1>
-        <p className="text-gray-600 text-lg md:text-xl">
-          Empowering businesses worldwide with cutting-edge technology solutions
+        <p className="text-gray-500 dark:text-gray-300 text-lg md:text-xl">
+          Discover the world with comfort, confidence, and unforgettable experiences
         </p>
       </div>
 
-      {/* Company Overview */}
+      {/* Who We Are */}
       <motion.div
-        className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8"
+        className="w-full mx-auto bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-10 mb-8"
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800">Who We Are</h2>
-        <p className="text-gray-600 leading-relaxed">
-          Raktch Technology & Software is a trailblazing technology company at
-          the forefront of innovation, offering cutting-edge solutions to
-          businesses worldwide. With a passion for disruptive technologies and a
-          commitment to driving digital transformation, we empower our clients
-          to thrive in the rapidly evolving digital landscape. Our focus on
-          innovation, expertise, and customer-centricity sets us apart,
-          enabling us to deliver unparalleled technology solutions tailored to
-          the unique needs of each client.
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          Who We Are
+        </h2>
+
+        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+          <b>Voyzen Travel</b> is a modern travel agency dedicated to making
+          your journeys smooth, affordable, and unforgettable. We connect
+          travelers with the most beautiful destinations around the world —
+          from tropical beaches to mountain adventures and cultural city tours.
+        </p>
+
+        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mt-4">
+          Our mission is to simplify travel planning through smart technology,
+          curated packages, and 24/7 support — ensuring every trip feels
+          effortless and enjoyable.
         </p>
       </motion.div>
 
-      {/* Company History */}
+      {/* Vision */}
       <motion.div
-        className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10"
+        className="w-full mx-auto bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-10 mb-8"
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-          Company History
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          Our Vision
         </h2>
-        <p className="text-gray-600 leading-relaxed mb-4">
-          Established in 2021, Raktch Technology & Software has quickly emerged
-          as a trusted provider of technology solutions. Our journey began with
-          a vision to empower businesses with transformative technologies, and
-          we have since grown into a reputable company known for our expertise,
-          reliability, and customer-centric approach.
+
+        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+          To become a global travel platform that inspires people to explore
+          the world without barriers. We aim to redefine travel experiences by
+          combining technology, trust, and personalized service.
         </p>
-        <p className="text-gray-600 leading-relaxed">
-          Today businesses of all sizes — from new startups to large enterprises
-          — use our software platform to build and manage connected products.
-          In 2022, Raktch released Smart and Automation Devices for different
-          fields.
+      </motion.div>
+
+      {/* History */}
+      <motion.div
+        className="w-full mx-auto bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-10"
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          Our Journey
+        </h2>
+
+        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+          Voyzen Travel started with a simple idea — travel should be easy,
+          accessible, and stress-free for everyone. What began as a small idea
+          has grown into a platform helping travelers discover amazing
+          destinations worldwide.
+        </p>
+
+        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+          Today, Voyzen Travel continues to grow with a focus on innovation,
+          customer satisfaction, and unforgettable travel experiences.
         </p>
       </motion.div>
     </motion.div>

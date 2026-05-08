@@ -1,55 +1,109 @@
-'use client'
-import React from 'react';
-import { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { CiMenuFries } from "react-icons/ci";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    return (
-        <nav className="bg-green-900 text-white shadow-lg w-[100%] sticky top-0 z-50">
-            <div className="w-[90%] mx-auto ">
-                <div className="flex justify-between items-center h-[64px]">
-                    {/* Agency Name */}
-                    <div className="flex-shrink-0">
-                        <Link href="/">
-                            <span className="text-2xl font-bold bg-clip-text text-transparent 
-  bg-gradient-to-r from-green-300 via-green-400 to-green-500">
-                                GlobeVista Agency
-                            </span>
+    const [darkMode, setDarkMode] = useState(false);
 
+    // apply dark mode class to html
+    useEffect(() => {
+        if (darkMode) {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+    }, [darkMode]);
+
+    return (
+        <nav className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white shadow-md w-full sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800">
+
+            <div className="w-[90%] mx-auto">
+                <div className="flex justify-between items-center h-[64px]">
+
+                    {/* Logo */}
+                    <div>
+                        <Link href="/">
+                            <span className="text-2xl font-bold bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent">
+                                Voyzen Travel
+                            </span>
                         </Link>
                     </div>
 
-                    {/* Menu */}
-                    <div className="hidden md:flex space-x-6">
-                        <Link href="/" className="hover:text-green-300">Home</Link>
-                        <Link href="/Tours" className="hover:text-green-300">Tours</Link>
-                        <Link href="/Booking_list" className="hover:text-green-300">Booking_List</Link>
-                        <Link href="/About" className="hover:text-green-300">About</Link>
-                        <Link href="/Contact" className="hover:text-green-300">Contact</Link>
+                    {/* Desktop Menu */}
+                    <div className="hidden md:flex space-x-6 font-medium">
+                        <Link href="/" className="hover:text-sky-500 transition">
+                            Home
+                        </Link>
+                        <Link href="/Explore" className="hover:text-sky-500 transition">
+                            Explore
+                        </Link>
+                        <Link href="/Booking_list" className="hover:text-sky-500 transition">
+                            Booking
+                        </Link>
+                        <Link href="/About" className="hover:text-sky-500 transition">
+                            About
+                        </Link>
+                        <Link href="/Contact" className="hover:text-sky-500 transition">
+                            Contact
+                        </Link>
                     </div>
 
-                    <div className="md:hidden flex items-center">
+                    {/* Right Side Controls */}
+                    <div className="flex items-center gap-3">
+                        <div className='hidden md:block'>
+                            <Link href="/Login" className="hover:text-sky-500 transition">
+                                Login
+                            </Link>
+                        </div>
+                        {/* Dark Mode Toggle */}
+                        <button
+                            onClick={() => setDarkMode(!darkMode)}
+                            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:scale-105 transition"
+                        >
+                            {darkMode ? (
+                                <FiSun className="text-yellow-400 text-xl" />
+                            ) : (
+                                <FiMoon className="text-gray-700 text-xl" />
+                            )}
+                        </button>
+
+                        {/* Mobile Menu Button */}
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="focus:outline-none"
+                            className="md:hidden p-2"
                         >
-                        {/* menu Icon is here */}
-                        <CiMenuFries className='text-3xl font-bold'/>
+                            <CiMenuFries className="text-3xl" />
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Menu for mobile */}
+            {/* Mobile Menu */}
             {isOpen && (
-                <div className="md:hidden bg-green-800 px-4 pb-4 space-y-2">
-                    <Link href="/" className="block hover:text-green-300">Home</Link>
-                    <Link href="/Tours" className="block hover:text-green-300">Tours</Link>
-                    <Link href="/Booking_list" className="block hover:text-green-300">Booking_List</Link>
-                    <Link href="/About" className="block hover:text-green-300">About</Link>
-                    <Link href="/Contact" className="block hover:text-green-300">Contact</Link>
+                <div className="md:hidden bg-white dark:bg-gray-900 px-6 pb-4 space-y-3 border-t border-gray-200 dark:border-gray-800">
+
+                    <Link href="/" className="block hover:text-sky-500">
+                        Home
+                    </Link>
+                    <Link href="/Explore" className="block hover:text-sky-500">
+                        Explore
+                    </Link>
+                    <Link href="/Booking_list" className="block hover:text-sky-500">
+                        Booking
+                    </Link>
+                    <Link href="/About" className="block hover:text-sky-500">
+                        About
+                    </Link>
+                    <Link href="/Contact" className="block hover:text-sky-500">
+                        Contact
+                    </Link>
+                    <Link href="/Login" className="hover:text-sky-500 transition">
+                        Login
+                    </Link>
+
                 </div>
             )}
         </nav>
