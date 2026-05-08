@@ -1,7 +1,6 @@
 
 import Stats from "@/component/Stats";
 import AboutPage from "./About/page";
-import Contact from "./Contact/page";
 import HomePage from "./Home/page";
 import ToursOverview from "./Home/ToursOverview/page";
 import Testimonials from "@/component/Testimonials";

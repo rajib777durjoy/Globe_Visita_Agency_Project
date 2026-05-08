@@ -3,8 +3,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-
+import usepublicAxios from "@/Hook/usepublicAxios";
+import {useState} from 'react';
 const RegisterPage = () => {
+    const useAxios = usepublicAxios();
+    const [showpassword,setShowpassword]= useState(false);
     const {
         register,
         handleSubmit,
@@ -13,7 +16,24 @@ const RegisterPage = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+        if (!passwordRegex.test(data.password)) {
+            return alert('password must be at least 6 characters and must be strong !')
+        }
+        if (data.password !== data.confirmPassword) {
+            return alert('password and confirm password must be same !')
+        }
+        const userData={
+            name:data?.name,
+            email:data?.email,
+            password:data?.password
+        }
+        useAxios.post('/api/auth/register',userData).then(res => {
+            console.log('register result::',res.data?.message)
+        }).catch(err => {
+            console.log('error', err.message)
+        })
+       console.log(data)
     };
 
     return (
@@ -74,17 +94,17 @@ const RegisterPage = () => {
                         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                             Password
                         </label>
-                        <input
-                            type="password"
-                            {...register("password", { required: "Password is required" })}
-                            placeholder="Create password"
-                            className="w-full mt-1 px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-400 outline-none"
-                        />
-                        {errors.password && (
-                            <span className="text-red-500 text-sm">
-                                {errors.password.message}
-                            </span>
-                        )}
+                        <div className='flex  rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-400 outline-none '>
+                            <input
+                                type={showpassword?"text":"password"}
+                                {...register("password", { required: "Password is required" })}
+                                placeholder="Create password"
+                                className="w-full mt-1 px-4 py-3 outline-none bg-transparent "
+                            />
+                            
+                            <button onClick={()=>setShowpassword(!showpassword)} className="mx-2 text-xs">{showpassword?"hide":"Show"}</button>
+                        </div>
+
                     </div>
 
                     {/* Confirm Password */}
@@ -112,7 +132,7 @@ const RegisterPage = () => {
                             className="mt-1 accent-sky-500"
                             {...register('checkbox', { required: true })}
                         />
-                         {errors.checkbox && (
+                        {errors.checkbox && (
                             <span className="text-red-500 text-sm">
                                 {errors.checkbox.type === 'required' && 'You must agree to the terms'}
                             </span>

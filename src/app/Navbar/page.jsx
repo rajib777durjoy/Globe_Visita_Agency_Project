@@ -3,11 +3,12 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { CiMenuFries } from "react-icons/ci";
 import { FiSun, FiMoon } from "react-icons/fi";
+import usepublicAxios from "@/Hook/usepublicAxios";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [darkMode, setDarkMode] = useState(false);
-
+    const useAxios= usepublicAxios();
     // apply dark mode class to html
     useEffect(() => {
         if (darkMode) {
@@ -16,7 +17,12 @@ const Navbar = () => {
             document.documentElement.classList.remove("dark");
         }
     }, [darkMode]);
-
+    const user = true;
+    const handleLogout=async()=>{
+     const res = await useAxios.post('/api/auth/logout',{email:user?.email})
+     console.log(res.data?.message)
+     /// here google logout function ///
+    }
     return (
         <nav className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white shadow-md w-full sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800">
 
@@ -54,9 +60,14 @@ const Navbar = () => {
                     {/* Right Side Controls */}
                     <div className="flex items-center gap-3">
                         <div className='hidden md:block'>
-                            <Link href="/Login" className="hover:text-sky-500 transition">
-                                Login
-                            </Link>
+                            {
+                                user ? <button onClick={handleLogout} className="hover:text-sky-500 transition">
+                                    Logout
+                                </button> : <Link href="/Login" className="hover:text-sky-500 transition">
+                                    Login
+                                </Link>
+                            }
+
                         </div>
                         {/* Dark Mode Toggle */}
                         <button
@@ -100,9 +111,13 @@ const Navbar = () => {
                     <Link href="/Contact" className="block hover:text-sky-500">
                         Contact
                     </Link>
-                    <Link href="/Login" className="hover:text-sky-500 transition">
-                        Login
-                    </Link>
+                    {
+                        user ? <button onClick={handleLogout} className="hover:text-sky-500 transition">
+                            Logout
+                        </button> : <Link href="/Login" className="hover:text-sky-500 transition">
+                            Login
+                        </Link>
+                    }
 
                 </div>
             )}
