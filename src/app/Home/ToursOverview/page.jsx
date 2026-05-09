@@ -1,17 +1,20 @@
 "use client";
-import { tourList } from "@/app/DummyData/page";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import useAxiosSecure from '@/Hook/useAxios';
 
 const ToursOverview = () => {
   const [tourData, setTourData] = useState([]);
   const [value, setvalue] = useState("");
   const router = useRouter();
 
+ const AxiosSecure= useAxiosSecure(); 
   useEffect(() => {
-    setTourData(tourList);
+    AxiosSecure.get('/api/tours/getTourlist').then(res => {
+      setTourData(res.data)
+    })
   }, []);
 
   const handleTourId = (id) => {
@@ -53,7 +56,7 @@ const ToursOverview = () => {
             {/* Image */}
             <div className="h-48 w-full bg-gray-200">
               <img
-                src={tour?.image}
+                src={tour?.tourImage}
                 alt={tour?.name}
                 className="w-full h-full object-cover"
               />
@@ -92,7 +95,7 @@ const ToursOverview = () => {
               {/* Button */}
               <div className="flex justify-between items-center mt-4">
                 <button
-                  onClick={() => handleTourId(tour?.id)}
+                  onClick={() => handleTourId(tour?._id)}
                   className="w-full py-2 rounded-lg bg-gradient-to-r from-sky-500 to-blue-600 text-white font-medium hover:opacity-90 transition"
                 >
                   View Details

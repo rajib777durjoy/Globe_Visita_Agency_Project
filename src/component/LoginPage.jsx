@@ -1,15 +1,18 @@
 'use client'
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import usepublicAxios from "@/Hook/usepublicAxios";
 import { FcGoogle } from "react-icons/fc";
  import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase.config";
+import { AuthContext } from "@/app/Provider/page";
+import { useRouter } from "next/navigation";
 const Loginpage = () => {
    
-
+const {googleLogin}= useContext(AuthContext)
 const provider = new GoogleAuthProvider();
+const router = useRouter()
     const useAxios = usepublicAxios();
     const {
         register,
@@ -24,6 +27,7 @@ const provider = new GoogleAuthProvider();
         }
         useAxios.post('/api/auth/login', data).then(res => {
             console.log('login result::', res.data?.message)
+            router.replace('/')
         }).catch(err => {
             console.log('error', err.message)
         })
@@ -31,7 +35,14 @@ const provider = new GoogleAuthProvider();
     };
     const handleGoogleLogin=async()=>{
       signInWithPopup(auth, provider).then((res)=>{
-        console.log('user',res.user);
+        console.log('user',res.user.displayName);
+        const name =res.user?.displayName
+        const email = res.user?.email
+        useAxios.post('/api/auth/googleLogin',{name,email})
+        .then(res=>{
+            console.log(res.data.message)
+            router.replace('/')
+        })
       })
     }
     return (

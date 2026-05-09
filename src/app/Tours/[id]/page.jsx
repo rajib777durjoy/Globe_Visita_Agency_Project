@@ -1,114 +1,142 @@
 "use client";
 
-import { tourList } from "@/app/DummyData/page";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
-import { addToLocalStorage, getToPreviousId } from "@/app/lib/localStorage";
+import useAxiosSecure from "@/Hook/useAxios";
+import { data } from "motion/react-client";
 
 const DetailsPage = () => {
-    const params = useParams();
-    const id = parseInt(params?.id);
-    const [data, setData] = useState([]);
-    const router = useRouter();
-    console.log('id', id)
-    useEffect(() => {
-        const data = tourList.filter((item) => item?.id === id)
-        setData(data)
-    }, [id])
+  const params = useParams();
+  const id = params?.id;
 
-    const handleBookingfunction = (book_id) => {
-        console.log('book id::', book_id)
-        addToLocalStorage(id)
-    }
+  const router = useRouter();
+  const AxiosSecure = useAxiosSecure();
 
-    return (<>
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-        <motion.div
-            className="w-[100%]  min-h-screen flex justify-center items-center bg-gray-100 p-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-        >
-            <button onClick={() => {
-                router.back()
-            }} className='btn border w-[25px] h-[25px] p-1 hover:border-amber-400 cursor-pointer rounded-full text-black -translate-y-80'><FaArrowLeft /></button>
-            {
-                data.map((item,index) => <motion.div key={index}
-                    className="bg-white  shadow-lg rounded-2xl overflow-hidden w-[90%] mx-auto grid md:grid-cols-2 gap-6"
-                    initial={{ y: 50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                >
+  useEffect(() => {
+    const fetchTour = async () => {
+      try {
+        const res = await AxiosSecure.get(
+          `/api/tours/getTourlist/${id}`
+        );
 
-                    {/* Image Section */}
-                    <motion.img
-                        src={item?.image}
-                        alt={item?.placeName}
-                        className="w-full h-80 md:h-[500px] rounded-md object-cover"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.4 }}
-                    />
+        setData(res.data);
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-                    {/* Content Section */}
-                    <div className="flex flex-col justify-center p-6 space-y-4">
+    if (id) fetchTour();
+  }, [id]);
 
-                        <motion.h1
-                            className="text-3xl font-bold text-gray-800"
-                            initial={{ x: -50, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                        >
-                            {item?.placeName}
-                        </motion.h1>
-                        <motion.p
-                            className="text-gray-600 leading-relaxed"
-                            initial={{ x: 50, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ delay: 0.4 }}
-                        >
-                            {item?.about}
-                        </motion.p>
-
-                        <motion.div
-                            className="grid grid-cols-2 gap-4 text-gray-700"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                        >
-                            <p>
-                                <span className="font-semibold">Date:</span> {item.date}
-                            </p>
-                            <p>
-                                <span className="font-semibold">Duration:</span> {item.duration}
-                            </p>
-                            <p>
-                                <span className="font-semibold">Price:</span> ${item.price}
-                            </p>
-                            <p>
-                                <span className="font-semibold">Review:</span> ⭐ {item.review}
-                            </p>
-                        </motion.div>
-
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => handleBookingfunction(item?.id)}
-                            className="mt-6 px-6 py-3 cursor-pointer bg-green-600 text-white font-semibold rounded-xl shadow hover:bg-green-700 transition"
-                        >
-                            Book Now
-                        </motion.button>
-                    </div>
-                </motion.div>)
-            }
-
-        </motion.div>
-        
-    </>
-
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
     );
+  }
+
+  if (!data) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        No data found
+      </div>
+    );
+  }
+  const handleBook =(id)=>{
+    const tourInfo ={image:data?.tourImage,placeName:data?.placeName,price:data?.price,duration:data?.duration}
+    AxiosSecure.put(`/api/tours/tourBook/${id}`,tourInfo)
+
+  }
+
+  return (
+    <motion.div
+      className="w-full min-h-screen flex justify-center items-center bg-gray-100 p-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+
+      {/* Back Button */}
+      <button
+        onClick={() => router.back()}
+        className="absolute top-5 left-5 btn border w-[40px] h-[40px] flex justify-center items-center rounded-full text-black"
+      >
+        <FaArrowLeft />
+      </button>
+
+      {/* Card */}
+      <motion.div
+        className="bg-white shadow-lg rounded-2xl overflow-hidden w-full max-w-5xl grid md:grid-cols-2 gap-6"
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+
+        {/* Image */}
+        <motion.img
+          src={data?.tourImage}
+          alt={data?.placeName}
+          className="w-full h-80 md:h-[500px] object-cover"
+          whileHover={{ scale: 1.05 }}
+        />
+
+        {/* Content */}
+        <div className="flex flex-col justify-center p-6 space-y-4">
+
+          <h1 className="text-3xl font-bold text-gray-800">
+            {data?.placeName}
+          </h1>
+
+          <p className="text-gray-600 leading-relaxed">
+            {data?.about}
+          </p>
+
+          <div className="grid grid-cols-2 gap-4 text-gray-700">
+
+            <p>
+              <span className="font-semibold">Date:</span>{" "}
+              {data?.date}
+            </p>
+
+            <p>
+              <span className="font-semibold">Duration:</span>{" "}
+              {data?.duration}
+            </p>
+
+            <p>
+              <span className="font-semibold">Price:</span>{" "}
+              ${data?.price}
+            </p>
+
+            <p>
+              <span className="font-semibold">Review:</span> ⭐{" "}
+              {data?.review}
+            </p>
+
+          </div>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={()=>handleBook(data?._id)}
+            className="mt-6 px-6 py-3 bg-green-600 text-white font-semibold rounded-xl shadow hover:bg-green-700"
+          >
+            Book Now
+          </motion.button>
+
+        </div>
+      </motion.div>
+
+    </motion.div>
+  );
 };
 
 export default DetailsPage;

@@ -1,14 +1,13 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { tourList } from '../DummyData/page';
 import { motion } from 'framer-motion';
 import { FiHeart } from "react-icons/fi";
-import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import { GrSort } from "react-icons/gr";
+import useAxiosSecure from '@/Hook/useAxios';
 const Tours = () => {
-  const [Tourlist, setTourlist] = useState(tourList);
+  const [Tourlist, setTourlist] = useState([]);
   const [SearchText,setSearchText]=useState('');
   const router = useRouter();
   const handleTourId = (id) => {
@@ -22,15 +21,13 @@ const Tours = () => {
     const sorted = [...Tourlist].sort((a, b) => b.price - a.price);
     setTourlist(sorted);
   }
+
+ const AxiosSecure= useAxiosSecure(); 
  useEffect(() => {
-  if (!SearchText) {
-    setTourlist(tourList); 
-    return;
-  }
-  const regex = new RegExp(SearchText, "i");
-  const searchFilter = tourList.filter((item) => regex.test(item?.placeName));
-  setTourlist(searchFilter);
-}, [SearchText]);
+  AxiosSecure.get('/api/tours/getTourlist').then(res=>{
+    setTourlist(res.data)
+  })
+}, []);
 
   return (
     <div className="w-full min-h-screen bg-gray-50 py-10 px-5">
@@ -63,7 +60,7 @@ const Tours = () => {
               {/* Tour Image */}
               <div className="h-48 w-full bg-gray-200">
                 <img
-                  src={tour.image}
+                  src={tour.tourImage}
                   alt={tour.name}
                   className="w-full h-full object-cover"
                 />

@@ -1,14 +1,22 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { CiMenuFries } from "react-icons/ci";
 import { FiSun, FiMoon } from "react-icons/fi";
 import usepublicAxios from "@/Hook/usepublicAxios";
+import { auth } from "../../../firebase.config";
+import { signOut } from "firebase/auth";
+import { AuthContext } from "../Provider/page";
+import { useRouter } from "next/navigation";
+import useAxiosSecure from "@/Hook/useAxios";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [darkMode, setDarkMode] = useState(false);
-    const useAxios= usepublicAxios();
+    const useAxios = usepublicAxios();
+    const AxiosSecure = useAxiosSecure();
+    const [userData, setuserData] = useState([]);
+    const router = useRouter()
     // apply dark mode class to html
     useEffect(() => {
         if (darkMode) {
@@ -17,12 +25,32 @@ const Navbar = () => {
             document.documentElement.classList.remove("dark");
         }
     }, [darkMode]);
-    const user = true;
-    const handleLogout=async()=>{
-     const res = await useAxios.post('/api/auth/logout',{email:user?.email})
-     console.log(res.data?.message)
-     /// here google logout function ///
+    useEffect(() => {
+        useAxios.get('/api/user/getuser')
+            .then(res => {
+                console.log('response', res?.data)
+                setuserData(res?.data)
+            }).catch(err => {
+                console.log('error', err.message)
+            })
+    }, [])
+    console.log('user data', userData?.email)
+
+    const handleLogout = () => {
+        useAxios.post('/api/auth/logout', { email: userData?.email })
+            .then(res => {
+                console.log('res', res.data.message)
+                signOut(auth).then(() => {
+                    console.log('sign out successfull')
+                    router.replace("/Login");
+                })
+                router.replace("/Login");
+            })
+
+
     }
+    const { data } = useContext(AuthContext)
+    console.log('data', data)
     return (
         <nav className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white shadow-md w-full sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800">
 
@@ -46,27 +74,30 @@ const Navbar = () => {
                         <Link href="/Explore" className="hover:text-sky-500 transition">
                             Explore
                         </Link>
-                        <Link href="/Booking_list" className="hover:text-sky-500 transition">
-                            Booking
-                        </Link>
                         <Link href="/About" className="hover:text-sky-500 transition">
                             About
                         </Link>
-                        <Link href="/Contact" className="hover:text-sky-500 transition">
-                            Contact
-                        </Link>
+                        {
+                            userData.role === 'admin' && <Link href="/adminDashboard" className="hover:text-sky-500 transition">
+                                Dashboard
+                            </Link> || <Link href="/userDashboard" className="hover:text-sky-500 transition">
+                                Dashboard
+                            </Link>
+                        }
                     </div>
 
                     {/* Right Side Controls */}
                     <div className="flex items-center gap-3">
                         <div className='hidden md:block'>
+
                             {
-                                user ? <button onClick={handleLogout} className="hover:text-sky-500 transition">
+                                userData?.email ? <button onClick={handleLogout} className="hover:text-sky-500 transition">
                                     Logout
                                 </button> : <Link href="/Login" className="hover:text-sky-500 transition">
                                     Login
                                 </Link>
                             }
+
 
                         </div>
                         {/* Dark Mode Toggle */}
@@ -102,17 +133,19 @@ const Navbar = () => {
                     <Link href="/Explore" className="block hover:text-sky-500">
                         Explore
                     </Link>
-                    <Link href="/Booking_list" className="block hover:text-sky-500">
-                        Booking
-                    </Link>
+
                     <Link href="/About" className="block hover:text-sky-500">
                         About
                     </Link>
-                    <Link href="/Contact" className="block hover:text-sky-500">
-                        Contact
-                    </Link>
                     {
-                        user ? <button onClick={handleLogout} className="hover:text-sky-500 transition">
+                        userData.role === 'admin' && <Link href="/adminDashboard" className="hover:text-sky-500 transition">
+                            Dashboard
+                        </Link> || <Link href="/userDashboard" className="hover:text-sky-500 transition">
+                            Dashboard
+                        </Link>
+                    }
+                    {
+                        userData?.email ? <button onClick={handleLogout} className="hover:text-sky-500 transition">
                             Logout
                         </button> : <Link href="/Login" className="hover:text-sky-500 transition">
                             Login

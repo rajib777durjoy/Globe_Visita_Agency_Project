@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import usepublicAxios from "@/Hook/usepublicAxios";
 import {useState} from 'react';
+import { useRouter } from "next/navigation";
 const RegisterPage = () => {
     const useAxios = usepublicAxios();
     const [showpassword,setShowpassword]= useState(false);
@@ -14,7 +15,7 @@ const RegisterPage = () => {
         watch,
         formState: { errors },
     } = useForm();
-
+    const router = useRouter()
     const onSubmit = (data) => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
         if (!passwordRegex.test(data.password)) {
@@ -30,6 +31,7 @@ const RegisterPage = () => {
         }
         useAxios.post('/api/auth/register',userData).then(res => {
             console.log('register result::',res.data?.message)
+            router.replace('/')
         }).catch(err => {
             console.log('error', err.message)
         })

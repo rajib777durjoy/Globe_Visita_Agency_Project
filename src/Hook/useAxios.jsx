@@ -2,11 +2,11 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "https://api.example.com",
+    baseURL:process.env.NEXT_PUBLIC_SERVER_URL,
     withCredentials: true,
 });
 
-const useAxios = () => {
+const useAxiosSecure = () => {
     instance.interceptors.response.use(response => {
         return response;
     }, error => {
@@ -21,4 +21,4 @@ const useAxios = () => {
     return instance;
 };
 
-export default useAxios;
+export default useAxiosSecure;
